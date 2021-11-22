@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte_TiposAnimales" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7e270e60-250b-4f08-81ce-652cbe7f572b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[select tipo_animal.id_tipo, tipo_animal.nombre_tipo, count(tipo_animal.id_tipo) as cantidad from mascota
+inner join tipo_animal ON tipo_animal.id_tipo = mascota.id_tipo
+inner join citas ON citas.id_mascota = mascota.id_mascota
+where citas.fecha_cita < '2021-11-18'
+group by tipo_animal.id_tipo, tipo_animal.nombre_tipo]]>
+	</queryString>
+	<field name="id_tipo" class="java.lang.Integer"/>
+	<field name="nombre_tipo" class="java.lang.String"/>
+	<field name="cantidad" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="55" y="0" width="727" height="79" uuid="3257aa3a-4c0c-4e16-90c3-1ccdb5d3e2be"/>
+				<textElement>
+					<font size="34"/>
+				</textElement>
+				<text><![CDATA[Tipos de Animales atendidos en la Veterinaria]]></text>
+			</staticText>
+		</band>
+	</title>
+	<summary>
+		<band height="370" splitType="Stretch">
+			<pie3DChart>
+				<chart>
+					<reportElement x="117" y="35" width="560" height="293" uuid="a6f087bf-bf07-4ef0-bf93-97a72d730aca"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{id_tipo}]]></keyExpression>
+					<valueExpression><![CDATA[$F{cantidad}]]></valueExpression>
+					<labelExpression><![CDATA[$F{nombre_tipo}]]></labelExpression>
+				</pieDataset>
+				<pie3DPlot>
+					<plot/>
+					<itemLabel/>
+				</pie3DPlot>
+			</pie3DChart>
+		</band>
+	</summary>
+</jasperReport>
